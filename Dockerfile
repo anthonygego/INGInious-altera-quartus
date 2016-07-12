@@ -1,4 +1,4 @@
-FROM centos:latest
+FROM ingi/inginious-c-default
 
 # Copy Quartus+ModelSim install files
 #ADD QuartusLiteSetup-16.0.0.211-linux.run /tmp/
