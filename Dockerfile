@@ -6,11 +6,9 @@ LABEL org.inginious.grading.name="quartus"
 #ADD ModelSimSetup-16.0.0.211-linux.run /tmp/
 #ADD cyclone-16.0.0.211.qdz /tmp/
 
-ADD vsim /tmp/
-
-RUN cd /tmp/ && curl http://download.altera.com/akdlm/software/acdsinst/17.0std/595/ib_installers/QuartusLiteSetup-17.0.0.595-linux.run > QuartusLiteSetup-17.0.0.595-linux.run \
-&& curl http://download.altera.com/akdlm/software/acdsinst/17.0std/595/ib_installers/ModelSimSetup-17.0.0.595-linux.run > ModelSimSetup-17.0.0.595-linux.run \
-&& curl http://download.altera.com/akdlm/software/acdsinst/17.0std/595/ib_installers/cyclone-17.0.0.595.qdz > cyclone-17.0.0.595.qdz \
+RUN cd /tmp/ && curl https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/QuartusLiteSetup-20.1.1.720-linux.run > QuartusLiteSetup-20.1.1.720-linux.run \
+&& curl https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run > ModelSimSetup-20.1.1.720-linux.run \
+&& curl https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/cyclone-20.1.1.720.qdz > cyclone-20.1.1.720.qdz \
 # Add execution permission
 && chmod +x *.run && chmod +r * \
 # Install dependencies and tools
@@ -18,15 +16,13 @@ RUN cd /tmp/ && curl http://download.altera.com/akdlm/software/acdsinst/17.0std/
                    glibc.i686 glibc-devel.i686 zlib-devel.i686 \
                    libXft.i686 libXext.i686 ncurses-libs.i686 \
 # Install Quartus+ModelSim in /opt
-&& ./QuartusLiteSetup-17.0.0.595-linux.run --mode unattended --installdir /opt/intelfpga \
-# Fix in vsim script
-&& cp /opt/intelfpga/modelsim_ase/bin/vsim /opt/intelfpga/modelsim_ase/bin/vsim.bak && chown root:root vsim && cp vsim /opt/intelfpga/modelsim_ase/bin/vsim \
+&& ./QuartusLiteSetup-20.1.1.720-linux.run --mode unattended --installdir /opt/intelfpga --accept_eula 1 \
 # Clean the tmp folder
-&& rm -rf /tmp/*
+&& rm  /tmp/QuartusLiteSetup-20.1.1.720-linux.run /tmp/ModelSimSetup-20.1.1.720-linux.run /tmp/cyclone-20.1.1.720.qdz \
+&& chmod -R 755 /opt/intelfpga
 
 # Add to PATH
 ENV PATH $PATH:/opt/intelfpga/quartus/bin:/opt/intelfpga/modelsim_ase/bin
 
 # Enable talkback feature
 #RUN xvfb-run -a tb2_install --enable
-
